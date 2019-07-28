@@ -72,20 +72,20 @@ namespace Tribonacci
             Dictionary<int, ulong> cache = new Dictionary<int, ulong>();
             for (int i = n; i <= k; i++)
             {
-                numbers.Add(Tribonacci(i, cache));
+                numbers.Add(Tribonacci(i));
+            }
+
+            ulong Tribonacci(int x)
+            {
+                if (cache.TryGetValue(x, out ulong result))
+                    return result;
+
+                result = x > 3 ? Tribonacci(x - 1) + Tribonacci(x - 2) + Tribonacci(x - 3) : 1;
+                cache[x] = result;
+                return result;
             }
 
             return numbers.ToArray();
-        }
-
-        static ulong Tribonacci(int x, Dictionary<int, ulong> cache)
-        {
-            if (cache.TryGetValue(x, out ulong result))
-                return result;
-
-            result = x > 3 ? Tribonacci(x - 1, cache) + Tribonacci(x - 2, cache) + Tribonacci(x - 3, cache) : 1;
-            cache[x] = result;
-            return result;
         }
     }
 }
